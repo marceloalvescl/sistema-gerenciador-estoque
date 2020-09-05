@@ -6,10 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Categoria implements Serializable{
-
+public class Estoque implements Serializable{
+	
 	/**
 	 * 
 	 */
@@ -18,33 +19,44 @@ public class Categoria implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String descricao;
+	@OneToOne
+	private Produto produto;
+	private Integer quantidadeProduto;
 	
-	public Categoria() {
+	public Estoque() {
 		
 	}
-
-	public Categoria(Integer id, String descricao) {
+	
+	public Estoque(Integer id, Produto produto, Integer quantidadeProduto) {
 		this.id = id;
-		this.descricao = descricao;
+		this.produto = produto;
+		this.quantidadeProduto = quantidadeProduto;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public String getDescricao() {
-		return descricao;
+
+	public Produto getProduto() {
+		return produto;
 	}
 	
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setCodigoProduto(Produto produto) {
+		this.produto = produto;
 	}
 	
+	public Integer getQuantidadeProduto() {
+		return quantidadeProduto;
+	}
+	
+	public void setQuantidadeProduto(Integer quantidadeProduto) {
+		this.quantidadeProduto = quantidadeProduto;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -52,7 +64,7 @@ public class Categoria implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -61,7 +73,7 @@ public class Categoria implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Estoque other = (Estoque) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -69,4 +81,5 @@ public class Categoria implements Serializable{
 			return false;
 		return true;
 	}
+	
 }
