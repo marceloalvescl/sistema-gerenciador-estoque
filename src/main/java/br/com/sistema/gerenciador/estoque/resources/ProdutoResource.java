@@ -1,25 +1,32 @@
 package br.com.sistema.gerenciador.estoque.resources;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.sistema.gerenciador.estoque.services.ProdutoService;
+import br.com.sistema.gerenciador.estoque.services.dto.ProdutoDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.sistema.gerenciador.estoque.domain.Produto;
-import br.com.sistema.gerenciador.estoque.services.ProdutoService;
+import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
+
+@Slf4j
 @RestController
-@RequestMapping(value = "/produtos")
+@RequiredArgsConstructor
+@RequestMapping("/api")
 public class ProdutoResource {
 
-	@Autowired
-	private ProdutoService produtoService;
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Produto> findAll(){
-		return produtoService.findAll();
-	}
-	
+    private final ProdutoService produtoService;
+
+    @GetMapping("/produtos")
+    public ResponseEntity<List<ProdutoDTO>> findAll(Pageable pageable) {
+        log.debug("REST request para recuperar todos os produtos, pageable = {}", pageable);
+
+        return ok(produtoService.findAll(pageable).getContent());
+    }
+
 }
