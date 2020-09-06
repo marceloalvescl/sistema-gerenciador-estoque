@@ -13,7 +13,7 @@ public interface ProdutoMapper extends EntityMapper<Produto, ProdutoDTO> {
     Produto toEntity(ProdutoDTO produtoDTO);
 
     @Override
-    @Mapping(source = "categoria", target = "categoriaId")
+    @Mapping(source = "categoria.id", target = "categoriaId")
     ProdutoDTO toDTO(Produto produto);
 
 }
