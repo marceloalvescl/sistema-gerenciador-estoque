@@ -1,20 +1,22 @@
 package br.com.sistema.gerenciador.estoque.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.sistema.gerenciador.estoque.repositories.EstoqueRepository;
+import br.com.sistema.gerenciador.estoque.services.dto.EstoqueDTO;
+import br.com.sistema.gerenciador.estoque.services.mapper.EstoqueMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.sistema.gerenciador.estoque.domain.Estoque;
-import br.com.sistema.gerenciador.estoque.repositories.EstoqueRepository;
-
 @Service
+@RequiredArgsConstructor
 public class EstoqueService {
-	@Autowired
-	private EstoqueRepository estoqueRepository;
-	
-	public List<Estoque> findAll(){
-		return estoqueRepository.findAll();
-	}
-	
+
+    private final EstoqueRepository estoqueRepository;
+    private final EstoqueMapper estoqueMapper;
+
+    public Page<EstoqueDTO> findAll(Pageable pageable) {
+        return estoqueRepository.findAll(pageable).map(estoqueMapper::toDTO);
+    }
+
 }

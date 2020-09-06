@@ -1,21 +1,22 @@
 package br.com.sistema.gerenciador.estoque.services;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.sistema.gerenciador.estoque.repositories.CategoriaRepository;
+import br.com.sistema.gerenciador.estoque.services.dto.CategoriaDTO;
+import br.com.sistema.gerenciador.estoque.services.mapper.CategoriaMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.sistema.gerenciador.estoque.domain.Categoria;
-import br.com.sistema.gerenciador.estoque.repositories.CategoriaRepository;
-
 @Service
+@RequiredArgsConstructor
 public class CategoriaService {
-	
-	@Autowired
-	private CategoriaRepository categoriaRepository;
-	
-	public List<Categoria> findAll(){
-		return categoriaRepository.findAll();
-	}
-	
+
+    private final CategoriaRepository categoriaRepository;
+    private final CategoriaMapper categoriaMapper;
+
+    public Page<CategoriaDTO> findAll(Pageable pageable) {
+        return categoriaRepository.findAll(pageable).map(categoriaMapper::toDTO);
+    }
+
 }
