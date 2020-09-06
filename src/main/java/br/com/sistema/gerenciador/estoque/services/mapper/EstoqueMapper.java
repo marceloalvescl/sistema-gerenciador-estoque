@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 public interface EstoqueMapper extends EntityMapper<Estoque, EstoqueDTO> {
 
     @Override
-    @Mapping(source = "produto", target = "produtoId")
+    @Mapping(source = "produto.id", target = "produtoId")
     EstoqueDTO toDTO(Estoque estoque);
 
     @Override
