@@ -13,7 +13,7 @@ public interface EstoqueMapper extends EntityMapper<Estoque, EstoqueDTO> {
     EstoqueDTO toDTO(Estoque estoque);
 
     @Override
-    @Mapping(source = "produtoId", target = "produto")
+    @Mapping(source = "produtoId", target = "produto.id")
     Estoque toEntity(EstoqueDTO estoqueDTO);
 
 }
